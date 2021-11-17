@@ -30,7 +30,7 @@
          document.getElementById('long').value = position.coords.longitude;
          document.getElementById('lat').value = position.coords.latitude;
          document.getElementById('start').disabled = false;
-         document.getElementById('start').style.background-color = '#BDFFC8';
+         document.getElementById('start').style.'background-color' = '#BDFFC8';
      }
 
      function fail()
@@ -127,7 +127,6 @@
       <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
       <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
       <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
-      <br>
       <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
       </FORM>
       <br>
