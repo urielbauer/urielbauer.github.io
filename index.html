@@ -32,21 +32,17 @@
      }
 
 
-
-
-function task(i) {
-       setTimeout(function() {
-         bikeFinder();
-       }, 5000 * i);
-     }
+      var i = 1;
 
      function startFunc() {
-       let i = 0;
-       while (i < 10) {
-         task(i);
-         i++ }
-       }
-
+       setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+         bikeFinder();   //  your code here
+         i++;                    //  increment the counter
+         if (i < 10) {           //  if the counter < 10, call the loop function
+           startFunc();             //  ..  again which will trigger another 
+         }                       //  ..  setTimeout()
+       }, 5000)
+     }
 
      function bikeFinder()
      {
