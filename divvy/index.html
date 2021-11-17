@@ -38,12 +38,23 @@
         // Could not obtain location
      }
 
+     function stop()
+     {
+       var i = 180
+       document.getElementById("bikelist").innerHTML = "";
+       document.getElementById("start").value = "Start";
+       document.getElementById("start").background = '#BDFFC8';
+       document.getElementById("start").onClick = startFunc();
+     }
 
       var i = 1;
 
      function startFunc() {
        if (i = 1) {
-         document.getElementById("bikelist").innerHTML = "Loading..."
+         document.getElementById("bikelist").innerHTML = "Loading...";
+         document.getElementById("start").value = "Stop";
+         document.getElementById("start").background = '#FFBDBD';
+         document.getElementById("start").onClick = stop();
        }
        setTimeout(function() {
          document.getElementById("bikelist").innerHTML = "";
@@ -120,52 +131,6 @@
        font-family: Arial;
      }
 
-     .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-}
-
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-.container input:checked ~ .checkmark {
-  background-color: #2196F3;
-}
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
    </style>
  </head>
 
