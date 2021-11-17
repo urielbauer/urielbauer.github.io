@@ -37,6 +37,19 @@
 
      function startFunc()
      {
+       let i = 0;
+       do {
+         task(i);
+         i++;
+       } while (i < 10);
+       function task(i) {
+         setTimeout(function() {
+           bikeFinder();
+         }, 5000 * i);
+       }
+
+     function bikeFinder()
+     {
        let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
        var rad = document.getElementById('radius').value;
        d3.json(requestURL).then(function(divvyData) {
