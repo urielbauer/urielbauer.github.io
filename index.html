@@ -60,7 +60,7 @@
             var soundBox = document.getElementById("sound");
             var alertBox = document.getElementById("alert");
             if (soundBox.checked == true) {
-            var beepsound = new Audio('www.rickshriver.net/sounds/keromong/gong D5.wav');
+            var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
               beepsound.play(); }
             if (alertBox.checked == true) {
               alert("A bike has been found!");
@@ -86,6 +86,7 @@
       Play Sound? <INPUT TYPE="checkbox" ID="sound">
       <br>
       Show Alert? <INPUT TYPE="checkbox" ID="alert">
+      <br>
       <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
       </FORM>
       <h2> Bikes: <div ID="bikelist"></div></h2>
