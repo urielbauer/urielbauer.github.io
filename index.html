@@ -39,7 +39,7 @@
          document.getElementById("bikelist").innerHTML = "";
          bikeFinder();
          i++;
-         if (i < 10) {
+         if (i < 180) {
            startFunc();
          }
        }, 5000)
@@ -54,7 +54,12 @@
          var allBikes = divvyData.data
          var bikearray = allBikes.bikes;
            const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').value) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').value) < (rad / 364300));
-           document.getElementById("bikelist").innerHTML = bikes.length;
+           document.getElementById("bikelist").innerHTML = bikes.length
+          if (bikes.length > 0) {
+            document.getElementById("bikelist").style.color = "green";
+          } else {
+             document.getElementById("bikelist").style.color = "red";
+           }
          })
      }
 
@@ -72,6 +77,6 @@
       <br><br>
       <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
       </FORM>
-      Bikes: <div ID="bikelist"></div>
+      <h2> Bikes: <div ID="bikelist"></div></h2>
  </body>
 </html>
