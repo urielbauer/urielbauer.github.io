@@ -17,7 +17,6 @@
      {
         if( navigator.geolocation )
         {
-           // Call getCurrentPosition with success and failure callbacks
            navigator.geolocation.getCurrentPosition( success, fail );
         }
         else
@@ -35,25 +34,26 @@
 
      function fail()
      {
-        // Could not obtain location
+        alert("Sorry, could not get your location.");
      }
 
-
+      function startFunc()
+      {
       var i = 1;
+      bikeFinder();
+      runFunc();
+      }
 
-     function startFunc() {
-       if (i = 1) {
+      function runFunc() {
          document.getElementById("bikelist").innerHTML = "Loading..."
-       }
        setTimeout(function() {
-         document.getElementById("bikelist").innerHTML = "";
          bikeFinder();
          i++;
          if (i < 180) {
-           startFunc();
+           runFunc();
          }
        }, 5000)
-     }
+      }
 
      function bikeFinder()
      {
