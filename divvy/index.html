@@ -74,7 +74,7 @@
    </script>
    <style>
    input[type=button] {
-     width: 40%;
+     width: 20%;
      background-color: white;
      color: black;
      padding: 14px 20px;
@@ -82,9 +82,10 @@
      border-color: black;
      border-radius: 4px;
      cursor: pointer;
+     font-size: 20px;
    }
    #long, #lat {
-     width: 40%;
+     width: 20%;
      padding: 12px 20px;
      margin: 8px 0;
      display: inline-block;
@@ -116,11 +117,9 @@
       <INPUT TYPE="button" NAME="locate" ID="locate" VALUE="Get Location" onClick="initGeolocation();">
       <INPUT TYPE="text" NAME="long" ID="long" VALUE="">
       <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="">
-      <br>
       <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
-      <br><br>
-      <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
       <br>
+      <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
       <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
       <br>
       <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
