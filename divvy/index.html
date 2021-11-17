@@ -41,10 +41,10 @@
       {
       var i = 1;
       bikeFinder();
-      runFunc();
+      runFunc( i );
       }
 
-      function runFunc() {
+      function runFunc( i ) {
          document.getElementById("bikelist").innerHTML = "Loading..."
        setTimeout(function() {
          bikeFinder();
