@@ -73,13 +73,34 @@
 
    </script>
    <style>
-   #start {
-		padding: 1em;
-		background: hsl(233deg 36% 38%);
-		color: hsl(0 0 100);
-		border: none;
-		border-radius: 30px;
-		font-weight: 600;}
+   input[type=button] {
+     width: 100%;
+     background-color: white;
+     color: white;
+     padding: 14px 20px;
+     margin: 8px 0;
+     border-color: black;
+     border-radius: 4px;
+     cursor: pointer;
+   }
+   #long #lat {
+     width: 40%;
+     padding: 12px 20px;
+     margin: 8px 0;
+     display: inline-block;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+    }
+    #radius {
+      width: 20%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+     }
    </style>
  </head>
 
@@ -89,7 +110,7 @@
       <INPUT TYPE="text" NAME="long" ID="long" VALUE="">
       <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="">
       <br>
-      <p>Radius (in ft | default = 1000):
+      <h2>Radius (in ft | default = 1000):</h2>
       <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000">
       <br><br>
       Play Sound? <INPUT TYPE="checkbox" ID="sound">
@@ -98,6 +119,7 @@
       <br>
       <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
       </FORM>
-      <h2> Bikes: <div ID="bikelist"></div></h2>
+      <br>
+      <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
  </body>
 </html>
