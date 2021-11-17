@@ -8,6 +8,10 @@
   <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
 
   <script>
+    function onLoadFunc()
+    {
+      document.getElementById('start').disabled = true;
+    }
      function initGeolocation()
      {
         if( navigator.geolocation )
@@ -23,7 +27,8 @@
      function success(position)
      {
          document.getElementById('long').value = position.coords.longitude;
-         document.getElementById('lat').value = position.coords.latitude
+         document.getElementById('lat').value = position.coords.latitude;
+         document.getElementById('start').disabled = false;
      }
 
      function fail()
@@ -75,7 +80,6 @@
    <style>
    input[type=button] {
      width: 20%;
-     background-color: white;
      color: black;
      padding: 14px 20px;
      margin: 8px 0;
@@ -112,17 +116,16 @@
    </style>
  </head>
 
- <body>
+ <body onload="onLoadFunc()">
     <FORM NAME="rd" METHOD="POST" ACTION="index.html">
       <INPUT TYPE="button" NAME="locate" ID="locate" VALUE="Get Location" onClick="initGeolocation();">
       <INPUT TYPE="text" NAME="long" ID="long" VALUE="">
       <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="">
       <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
-      <br>
       <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
       <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
       <br>
-      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
+      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();" onl>
       </FORM>
       <br>
       <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
