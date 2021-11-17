@@ -35,12 +35,13 @@
       var i = 1;
 
      function startFunc() {
-       setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-         bikeFinder();   //  your code here
-         i++;                    //  increment the counter
-         if (i < 10) {           //  if the counter < 10, call the loop function
-           startFunc();             //  ..  again which will trigger another 
-         }                       //  ..  setTimeout()
+       setTimeout(function() {
+         document.getElementById("bikelist").innerHTML = "";
+         bikeFinder();
+         i++;
+         if (i < 10) {
+           startFunc();
+         }
        }, 5000)
      }
 
