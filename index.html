@@ -34,19 +34,19 @@
 
 
 
+function task(i) {
+       setTimeout(function() {
+         bikeFinder();
+       }, 5000 * i);
+     }
 
-     function startFunc()
-     {
+     function startFunc() {
        let i = 0;
-       do {
+       while (i < 10) {
          task(i);
-         i++;
-       } while (i < 10);
-       function task(i) {
-         setTimeout(function() {
-           bikeFinder();
-         }, 5000 * i);
+         i++ }
        }
+
 
      function bikeFinder()
      {
