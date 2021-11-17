@@ -38,22 +38,13 @@
         // Could not obtain location
      }
 
-     function stop()
-     {
-       var i = 180;
-       document.getElementById("bikelist").innerHTML = "";
-       document.getElementById("start").value = "Start";
-       document.getElementById("start").background = '#BDFFC8';
-       document.getElementById("start").onClick = startFunc();
-     }
 
       var i = 1;
 
      function startFunc() {
-         document.getElementById("bikelist").innerHTML = "Loading...";
-         document.getElementById("start").value = "Stop";
-         document.getElementById("start").background = '#FFBDBD';
-         document.getElementById("start").onClick = stop();
+       if (i = 1) {
+         document.getElementById("bikelist").innerHTML = "Loading..."
+       }
        setTimeout(function() {
          document.getElementById("bikelist").innerHTML = "";
          bikeFinder();
