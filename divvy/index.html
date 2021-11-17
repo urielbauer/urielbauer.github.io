@@ -50,12 +50,10 @@
       var i = 1;
 
      function startFunc() {
-       if (i = 1) {
          document.getElementById("bikelist").innerHTML = "Loading...";
          document.getElementById("start").value = "Stop";
          document.getElementById("start").background = '#FFBDBD';
          document.getElementById("start").onClick = stop();
-       }
        setTimeout(function() {
          document.getElementById("bikelist").innerHTML = "";
          bikeFinder();
