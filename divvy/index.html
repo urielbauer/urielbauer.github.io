@@ -40,17 +40,41 @@
       function startFunc()
       {
       var i = 1;
+      var soundBox = document.getElementById("sound");
+      var alertBox = document.getElementById("alert");
+      if (soundBox.checked == true) {
+        var s == true;
+      }
+      else {
+        var s == false;
+        }
+      if (alertBox.checked == true) {
+        var a == true;
+      } else {
+        var a == false;
+      }
       bikeFinder();
-      runFunc( i );
+      runFunc( i s a );
       }
 
-      function runFunc( i ) {
+      function runFunc( i s a ) {
          document.getElementById("bikelist").innerHTML = "Loading..."
        setTimeout(function() {
          bikeFinder();
+         if bikeFinder() == true {
+           if (s == true) {
+             var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
+             beepsound.play();
+             beepsound.play();
+             var s == false;
+           }
+           if (a == true) {
+             alert("A bike has been found!");
+             var a == false;
+           } }
          i++;
          if (i < 180) {
-           runFunc( i );
+           runFunc( i s a );
          }
        }, 5000)
       }
@@ -67,16 +91,11 @@
            document.getElementById("bikelist").innerHTML = bikes.length
           if (bikes.length > 0) {
             document.getElementById("bikelist").style.color = "green";
-            var soundBox = document.getElementById("sound");
-            var alertBox = document.getElementById("alert");
-            if (soundBox.checked == true) {
-            var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
-              beepsound.play(); }
-            if (alertBox.checked == true) {
-              alert("A bike has been found!");
-            }
+            return true;
           } else {
              document.getElementById("bikelist").style.color = "red";
+             return false;
+
            }
          })
      }
