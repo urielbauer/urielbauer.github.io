@@ -24,6 +24,7 @@
            alert("Sorry, your browser does not support geolocation services.");
         }
      }
+
      function success(position)
      {
          document.getElementById('long').value = position.coords.longitude;
@@ -54,10 +55,10 @@
         var a == false;
       }
       bikeFinder();
-      runFunc( i s a );
+      runFunc( i, s, a );
       }
 
-      function runFunc( i s a ) {
+      function runFunc( i, s, a ) {
          document.getElementById("bikelist").innerHTML = "Loading..."
        setTimeout(function() {
          bikeFinder();
@@ -74,7 +75,7 @@
            } }
          i++;
          if (i < 180) {
-           runFunc( i s a );
+           runFunc( i, s, a );
          }
        }, 5000)
       }
