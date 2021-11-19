@@ -61,7 +61,7 @@
          document.getElementById("bikelist").innerHTML = "Loading..."
        setTimeout(function() {
          bikeFinder();
-         if bikeFinder() == true {
+         if (bikeFinder() == true) {
            if (s == true) {
              var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
              beepsound.play();
