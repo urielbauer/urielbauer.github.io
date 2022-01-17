@@ -17,6 +17,7 @@
      {
         if( navigator.geolocation )
         {
+           // Call getCurrentPosition with success and failure callbacks
            navigator.geolocation.getCurrentPosition( success, fail );
         }
         else
@@ -24,7 +25,6 @@
            alert("Sorry, your browser does not support geolocation services.");
         }
      }
-
      function success(position)
      {
          document.getElementById('long').value = position.coords.longitude;
@@ -35,54 +35,25 @@
 
      function fail()
      {
-        alert("Sorry, could not get your location.");
+        // Could not obtain location
      }
 
-      function startFunc()
-      {
-      var i = 1;
-      var soundBox = document.getElementById("sound");
-      var alertBox = document.getElementById("alert");
-      if (soundBox.checked == true) {
-        let s = true;
-      } else {
-        let s = false;
-        }
-      if (alertBox.checked == true) {
-        let a = true;
-      } else {
-        let a = false;
-      }
-      bikeFinder();
-      runFunc( i, s, a );
-      }
 
-      function runFunc( i, s, a ) {
+      var i = 1;
+
+     function startFunc() {
+       if (i = 1) {
          document.getElementById("bikelist").innerHTML = "Loading..."
+       }
        setTimeout(function() {
+         document.getElementById("bikelist").innerHTML = "";
          bikeFinder();
-         if (bikeFinder() == true) {
-           if (s == true) {
-             var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
-             beepsound.play();
-             beepsound.play();
-             let s = false;
-           } else {
-             let s = false;
-           }
-           if (a == true) {
-             alert("A bike has been found!");
-             let a = false;
-           } else {
-             let a = false;
-           }
-         }
          i++;
          if (i < 180) {
-           runFunc( i, s, a );
+           startFunc();
          }
        }, 5000)
-      }
+     }
 
      function bikeFinder()
      {
@@ -96,11 +67,16 @@
            document.getElementById("bikelist").innerHTML = bikes.length
           if (bikes.length > 0) {
             document.getElementById("bikelist").style.color = "green";
-            return true;
+            var soundBox = document.getElementById("sound");
+            var alertBox = document.getElementById("alert");
+            if (soundBox.checked == true) {
+            var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
+              beepsound.play(); }
+            if (alertBox.checked == true) {
+              alert("A bike has been found!");
+            }
           } else {
              document.getElementById("bikelist").style.color = "red";
-             return false;
-
            }
          })
      }
@@ -144,11 +120,56 @@
        font-family: Arial;
      }
 
+     .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
    </style>
  </head>
 
  <body onload="onLoadFunc()">
-   <h1>NOTE: UNDER CONSTRUCTION – DOES NOT WORK PROPERLY (updated 11/19/21)</h1>
     <FORM NAME="rd" METHOD="POST" ACTION="index.html">
       <INPUT TYPE="button" NAME="locate" ID="locate" VALUE="Get Location" onClick="initGeolocation();">
       <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="latitude">
