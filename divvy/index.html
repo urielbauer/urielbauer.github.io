@@ -38,12 +38,6 @@
         // Could not obtain location
      }
 
-      function runFunc() {
-        document.getElementById("bikelist").innerHTML = "Loading...";
-        bikeFinder();
-        setTimeout(runFunc(), 5000);
-     }
-
      function bikeFinder()
      {
        let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
@@ -68,6 +62,12 @@
              document.getElementById("bikelist").style.color = "red";
            }
          })
+     }
+     
+     function runFunc() {
+        document.getElementById("bikelist").innerHTML = "Loading...";
+        setTimeout(bikeFinder(), 300);
+        setTimeout(runFunc(), 5000);
      }
 
    </script>
