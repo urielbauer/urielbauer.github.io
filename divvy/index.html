@@ -38,15 +38,10 @@
         // Could not obtain location
      }
 
-      function runFunc(i) {
-        setTimeout(function() {
-            document.getElementById("bikelist").innerHTML = "";
-            bikeFinder();
-            if (i < 180) {
-                runFunc(i++);
-            }
-       }, 5000)
+      function runFunc() {
+        setTimeout(bikeFinder(), 5000);
        document.getElementById("bikelist").innerHTML = "Loading...";
+       runFunc();
      }
 
      function bikeFinder()
