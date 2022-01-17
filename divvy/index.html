@@ -39,7 +39,6 @@
      }
 
       function runFunc(i) {
-        document.getElementById("bikelist").innerHTML = "Loading..."
         setTimeout(function() {
             document.getElementById("bikelist").innerHTML = "";
             bikeFinder();
@@ -47,6 +46,7 @@
                 runFunc(i++);
             }
        }, 5000)
+       document.getElementById("bikelist").innerHTML = "Loading...";
      }
 
      function bikeFinder()
