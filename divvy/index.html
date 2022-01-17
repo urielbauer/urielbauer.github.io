@@ -40,8 +40,8 @@
 
       function runFunc() {
         document.getElementById("bikelist").innerHTML = "Loading...";
-        setTimeout(bikeFinder(), 5000);
-        runFunc();
+        bikeFinder();
+        setTimeout(runFunc(), 5000);
      }
 
      function bikeFinder()
