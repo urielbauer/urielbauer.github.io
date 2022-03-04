@@ -36,9 +36,9 @@
      function bikeFinder()
      {
         document.getElementById("bikelist").innerHTML = "Loading...";
-       let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
-       var rad = document.getElementById('radius').value;
-       d3.json(requestURL).then(function(divvyData) {
+        let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
+        var rad = document.getElementById('radius').value;
+        d3.json(requestURL).then(function(divvyData) {
          var tbody = d3.select("tbody");
          var allBikes = divvyData.data
          var bikearray = allBikes.bikes;
@@ -57,9 +57,8 @@
           } else {
              document.getElementById("bikelist").style.color = "red";
            }
-           setTimeout(bikeFinder(), 5000);
-         })
-         
+         });
+         setTimeout(bikeFinder(), 5000);
      }
 
    </script>
