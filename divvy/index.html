@@ -33,6 +33,8 @@
         // Could not obtain location
      }
 
+     setInterval(bikeFinder(),5000);
+
     function bikeFinder()
     {
         document.getElementById("bikelist").innerHTML = "Loading...";
@@ -58,11 +60,6 @@
             document.getElementById("bikelist").style.color = "red";
         }
         });
-    }
-
-    function startFunction()
-    {
-        setInterval(bikeFinder(),5000);
     }
 
    </script>
@@ -161,7 +158,7 @@
       <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
       <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
       <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
-      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunction();">
+      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="bikeFinder();">
       </FORM>
       <br>
       <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
