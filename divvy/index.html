@@ -35,6 +35,7 @@
 
      function bikeFinder()
      {
+        document.getElementById("bikelist").innerHTML = "Loading...";
        let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
        var rad = document.getElementById('radius').value;
        d3.json(requestURL).then(function(divvyData) {
@@ -57,12 +58,7 @@
              document.getElementById("bikelist").style.color = "red";
            }
          })
-     }
-     
-     function runFunc() {
-        document.getElementById("bikelist").innerHTML = "Loading...";
-        setTimeout(bikeFinder(), 30);
-        setTimeout(runFunc(), 500);
+         setTimeout(bikeFinder(), 5000);
      }
 
    </script>
@@ -161,7 +157,7 @@
       <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
       <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
       <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
-      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="runFunc();">
+      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="bikeFinder();">
       </FORM>
       <br>
       <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
