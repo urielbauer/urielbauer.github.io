@@ -43,7 +43,7 @@
          var allBikes = divvyData.data
          var bikearray = allBikes.bikes;
            const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').value) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').value) < (rad / 364300));
-           document.getElementById("bikelist").innerHTML = bikes.length}
+           document.getElementById("bikelist").innerHTML = bikes.length
           if (bikes.length > 0) {
             document.getElementById("bikelist").style.color = "green";
             var soundBox = document.getElementById("sound");
@@ -57,8 +57,9 @@
           } else {
              document.getElementById("bikelist").style.color = "red";
            }
-         )
-         setTimeout(bikeFinder(), 5000);
+           setTimeout(bikeFinder(), 5000);
+         })
+         
      }
 
    </script>
