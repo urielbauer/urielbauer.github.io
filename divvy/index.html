@@ -55,6 +55,7 @@
 
         function bikeFinder()
         {
+            mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
             if (currentMarkers!==null) {
                 for (var i = currentMarkers.length - 1; i >= 0; i--) {
                 currentMarkers[i].remove();
