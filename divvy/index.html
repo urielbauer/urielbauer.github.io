@@ -24,8 +24,8 @@
 
         function success(position)
         {
-            document.getElementById('long').value = position.coords.longitude;
-            document.getElementById('lat').value = position.coords.latitude;
+            document.getElementById('long').innerText = position.coords.longitude;
+            document.getElementById('lat').innerText = position.coords.latitude;
             mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
             map = new mapboxgl.Map({
                 container: 'map',
@@ -39,8 +39,8 @@
 
         function fail()
         {
-            document.getElementById('long').value = "LOCATION ERROR";
-            document.getElementById('lat').value = "LOCATION ERROR";
+            document.getElementById('locationtext').innerHTML = "ERROR: LOCATION NOT FOUND";
+            document.getElementById('locationtext').style.color = "red";
         }
 
         var currentMarkers=[];
@@ -61,7 +61,7 @@
             var tbody = d3.select("tbody");
             var allBikes = divvyData.data
             var bikearray = allBikes.bikes;
-            const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').value) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').value) < (rad / 364300));
+            const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').innerText) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').innerText) < (rad / 364300));
             document.getElementById("bikelist").innerHTML = bikes.length
             if (bikes.length > 0) {
                 document.getElementById("bikelist").style.color = "green";
@@ -172,6 +172,7 @@
 
  <body onload="onLoadFunc()">
     <FORM NAME="rd" METHOD="POST" ACTION="index.html">
+        <p ID="locationtext">Current Location: <div ID="long">undefined</div>, <div ID="lat">undefined</div></p>
         <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="latitude">
         <INPUT TYPE="text" NAME="long" ID="long" VALUE="longitude">
         <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
