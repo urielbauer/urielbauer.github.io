@@ -96,15 +96,6 @@
             cursor: pointer;
             font-size: 20px;
         }
-        #long, #lat {
-            width: 20%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
         #radius {
         width: 20%;
         padding: 12px 20px;
@@ -173,8 +164,6 @@
  <body onload="onLoadFunc()">
     <FORM NAME="rd" METHOD="POST" ACTION="index.html">
         <p ID="locationtext">Current Location: <div ID="long">undefined</div>, <div ID="lat">undefined</div></p>
-        <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="latitude">
-        <INPUT TYPE="text" NAME="long" ID="long" VALUE="longitude">
         <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
         <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
         <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
