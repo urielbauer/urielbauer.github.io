@@ -44,6 +44,7 @@
         }
 
         var currentMarkers=[];
+        var previousbikes = 0;
 
         function bikeFinder()
         {
@@ -65,7 +66,7 @@
             if (bikes.length > 0) {
                 document.getElementById("bikelist").style.color = "green";
                 var soundBox = document.getElementById("sound");
-                if (soundBox.checked == true) {
+                if (soundBox.checked == true && bikes.length > previousbikes) {
                     var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
                     beepsound.play();
                 }
@@ -78,6 +79,7 @@
             } else {
                 document.getElementById("bikelist").style.color = "red";
             }
+            previousbikes = bikes.length;
             });
         }
 
