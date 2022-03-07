@@ -1,167 +1,178 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js" integrity="sha512-L5K9Bf852XyB+wrvRFGwWzfhVI+TZqJlgwzX9yvrfhILuzIZfrcQO4au9D9eVDnkQ6oqYr9v2QwJdFo+eKE50Q==" crossorigin="anonymous"></script>
-  <script>
-    function onLoadFunc()
-    {
-      document.getElementById('start').disabled = true;
-      document.getElementById('start').style.background = '#C0C0C0';
-    }
-     function initGeolocation()
-     {
-        if( navigator.geolocation )
+    <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js" integrity="sha512-L5K9Bf852XyB+wrvRFGwWzfhVI+TZqJlgwzX9yvrfhILuzIZfrcQO4au9D9eVDnkQ6oqYr9v2QwJdFo+eKE50Q==" crossorigin="anonymous"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <script>
+        function onLoadFunc()
         {
-           // Call getCurrentPosition with success and failure callbacks
-           navigator.geolocation.getCurrentPosition( success, fail );
+        document.getElementById('start').disabled = true;
+        document.getElementById('start').style.background = '#C0C0C0';
         }
-        else
+        function initGeolocation()
         {
-           alert("Sorry, your browser does not support geolocation services.");
-        }
-     }
-     function success(position)
-     {
-         document.getElementById('long').value = position.coords.longitude;
-         document.getElementById('lat').value = position.coords.latitude;
-         document.getElementById('start').disabled = false;
-         document.getElementById('start').style.background = '#BDFFC8';
-     }
-
-     function fail()
-     {
-        // Could not obtain location
-     }
-
-    
-
-    function bikeFinder()
-    {
-        document.getElementById("bikelist").innerHTML = "Loading...";
-        let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
-        var rad = document.getElementById('radius').value;
-        d3.json(requestURL).then(function(divvyData) {
-        var tbody = d3.select("tbody");
-        var allBikes = divvyData.data
-        var bikearray = allBikes.bikes;
-        const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').value) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').value) < (rad / 364300));
-        document.getElementById("bikelist").innerHTML = bikes.length
-        if (bikes.length > 0) {
-            document.getElementById("bikelist").style.color = "green";
-            var soundBox = document.getElementById("sound");
-            var alertBox = document.getElementById("alert");
-            if (soundBox.checked == true) {
-            var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
-            beepsound.play(); }
-            if (alertBox.checked == true) {
-            alert("A bike has been found!");
+            if( navigator.geolocation )
+            {
+            // Call getCurrentPosition with success and failure callbacks
+            navigator.geolocation.getCurrentPosition( success, fail );
             }
-        } else {
-            document.getElementById("bikelist").style.color = "red";
+            else
+            {
+            alert("Sorry, your browser does not support geolocation services.");
+            }
         }
-        });
-        setInterval(bikeFinder,5000);
-    }
+        function success(position)
+        {
+            document.getElementById('long').value = position.coords.longitude;
+            document.getElementById('lat').value = position.coords.latitude;
+            document.getElementById('start').disabled = false;
+            document.getElementById('start').style.background = '#BDFFC8';
+        }
 
-   </script>
-   <style>
-   input[type=button] {
-     width: 20%;
-     color: black;
-     background-color: #C6F3FF;
-     padding: 14px 20px;
-     margin: 8px 0;
-     border-color: black;
-     border-radius: 4px;
-     cursor: pointer;
-     font-size: 20px;
-   }
-   #long, #lat {
-     width: 20%;
-     padding: 12px 20px;
-     margin: 8px 0;
-     display: inline-block;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-     box-sizing: border-box;
-    }
-    #radius {
-      width: 20%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-     }
-     p {
-       font-size: 25px;
-       font-family: Arial;
-     }
-     h2 {
-       font-family: Arial;
-     }
+        function fail()
+        {
+            document.getElementById('long').value = "LOCATION ERROR";
+            document.getElementById('lat').value = "LOCATION ERROR";
+        }
 
-     .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
+        
 
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-}
+        function bikeFinder()
+        {
+            document.getElementById("bikelist").innerHTML = "Loading...";
+            let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
+            var rad = document.getElementById('radius').value;
+            d3.json(requestURL).then(function(divvyData) {
+            var tbody = d3.select("tbody");
+            var allBikes = divvyData.data
+            var bikearray = allBikes.bikes;
+            const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').value) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').value) < (rad / 364300));
+            document.getElementById("bikelist").innerHTML = bikes.length
+            if (bikes.length > 0) {
+                document.getElementById("bikelist").style.color = "green";
+                var soundBox = document.getElementById("sound");
+                var alertBox = document.getElementById("alert");
+                if (soundBox.checked == true) {
+                var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
+                beepsound.play(); }
+                if (alertBox.checked == true) {
+                alert("A bike has been found!");
+                }
+            } else {
+                document.getElementById("bikelist").style.color = "red";
+            }
+            });
+            setInterval(bikeFinder,5000);
+        }
 
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
+    </script>
+    <style>
+        input[type=button] {
+            width: 20%;
+            color: black;
+            background-color: #C6F3FF;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border-color: black;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        #long, #lat {
+            width: 20%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #radius {
+        width: 20%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+        p {
+        font-size: 25px;
+        font-family: Arial;
+        }
+        h2 {
+        font-family: Arial;
+        }
+        .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        }
 
-.container input:checked ~ .checkmark {
-  background-color: #2196F3;
-}
+        .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        }
 
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
+        .container:hover input ~ .checkmark {
+        background-color: #ccc;
+        }
 
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
+        .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+        }
 
-.container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-   </style>
+        .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        .container input:checked ~ .checkmark:after {
+        display: block;
+        }
+
+        .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+    </style>
  </head>
 
  <body onload="onLoadFunc()">
     <FORM NAME="rd" METHOD="POST" ACTION="index.html">
-      <INPUT TYPE="button" NAME="locate" ID="locate" VALUE="Get Location" onClick="initGeolocation();">
-      <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="latitude">
-      <INPUT TYPE="text" NAME="long" ID="long" VALUE="longitude">
-      <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
-      <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
-      <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
-      <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="bikeFinder();">
-      </FORM>
-      <br>
-      <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
+        <INPUT TYPE="button" NAME="locate" ID="locate" VALUE="Get Location" onClick="initGeolocation();">
+        <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="latitude">
+        <INPUT TYPE="text" NAME="long" ID="long" VALUE="longitude">
+        <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
+        <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
+        <p> Show Alert? <INPUT TYPE="checkbox" ID="alert"> </p>
+        <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="bikeFinder();">
+    </FORM>
+    <br>
+    <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11'
+    });
+    </script>
  </body>
 </html>
