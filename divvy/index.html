@@ -28,6 +28,13 @@
             document.getElementById('lat').value = position.coords.latitude;
             document.getElementById('start').disabled = false;
             document.getElementById('start').style.background = '#BDFFC8';
+            mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [position.coords.latitude.value,position.coords.longitude],
+                zoom: 2
+            });
         }
 
         function fail()
@@ -52,13 +59,6 @@
             var bikearray = allBikes.bikes;
             const bikes = bikearray.filter(d => Math.abs(d.lon - document.getElementById('long').value) < (rad / 364300) && Math.abs(d.lat - document.getElementById('lat').value) < (rad / 364300));
             document.getElementById("bikelist").innerHTML = bikes.length
-            //map features
-            mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                center: [document.getElementById('lat').value,document.getElementById('long').value],
-            });
             if (bikes.length > 0) {
                 document.getElementById("bikelist").style.color = "green";
                 var soundBox = document.getElementById("sound");
