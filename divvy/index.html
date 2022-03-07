@@ -22,6 +22,9 @@
             alert("Sorry, your browser does not support geolocation services.");
             }
         }
+
+        var map;
+
         function success(position)
         {
             document.getElementById('long').value = position.coords.longitude;
@@ -29,7 +32,7 @@
             document.getElementById('start').disabled = false;
             document.getElementById('start').style.background = '#BDFFC8';
             mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
-            var map = new mapboxgl.Map({
+            map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [position.coords.latitude,position.coords.longitude],
