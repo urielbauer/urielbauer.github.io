@@ -57,7 +57,7 @@
             var map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
-                center: [document.getElementById('lat').value,getElementById('long').value],
+                center: [document.getElementById('lat').value,document.getElementById('long').value],
             });
             if (bikes.length > 0) {
                 document.getElementById("bikelist").style.color = "green";
