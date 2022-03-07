@@ -36,7 +36,7 @@
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [position.coords.longitude,position.coords.latitude],
-                zoom: 2
+                zoom: 10
             });
         }
 
@@ -59,7 +59,7 @@
                 for (var i = currentMarkers.length - 1; i >= 0; i--) {
                 currentMarkers[i].remove();
                 }
-            }   
+            }
             document.getElementById("bikelist").innerHTML = "Loading...";
             let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
             var rad = document.getElementById('radius').value;
