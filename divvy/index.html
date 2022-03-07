@@ -163,8 +163,9 @@
 
  <body onload="onLoadFunc()">
     <FORM NAME="rd" METHOD="POST" ACTION="index.html">
-        <p ID="locationtext">Current Location: <p ID="long">undefined</p>, <p ID="lat">undefined</p></p>
-        <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
+        <p ID="locationtext">Current Location: <span ID="long">undefined</span>, <span ID="lat">undefined</span></p>
+        <p>Radius (in feet): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
+        <p>Search Interval (in seconds): <INPUT TYPE="text" NAME="sinterval" ID="sinterval" VALUE="5"></p>
         <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
         <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
     </FORM>
