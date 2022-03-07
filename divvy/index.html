@@ -36,7 +36,7 @@
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [position.coords.longitude,position.coords.latitude],
-                zoom: 10
+                zoom: 14
             });
         }
 
@@ -79,7 +79,7 @@
                 }
                 bikes.forEach(element => {
                     const marker = new mapboxgl.Marker()
-                    .setLngLat([element.lat, element.lon])
+                    .setLngLat([element.lon, element.lat])
                     .addTo(map);
                     currentMarkers.push(marker);
                 });
