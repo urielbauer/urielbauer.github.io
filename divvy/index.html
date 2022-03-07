@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Divvy Finder</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js" integrity="sha512-L5K9Bf852XyB+wrvRFGwWzfhVI+TZqJlgwzX9yvrfhILuzIZfrcQO4au9D9eVDnkQ6oqYr9v2QwJdFo+eKE50Q==" crossorigin="anonymous"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
@@ -10,7 +11,9 @@
         document.getElementById('start').disabled = true;
         document.getElementById('start').style.background = '#C0C0C0';
         }
-        function initGeolocation()
+        
+        
+        function startFunc()
         {
             if( navigator.geolocation )
             {
@@ -38,17 +41,14 @@
                 center: [position.coords.longitude,position.coords.latitude],
                 zoom: 14
             });
+            bikeFinder();
+            setInterval(bikeFinder,5000);
         }
 
         function fail()
         {
             document.getElementById('long').value = "LOCATION ERROR";
             document.getElementById('lat').value = "LOCATION ERROR";
-        }
-
-        function addMarkers(map, lat, lon)
-        {
-            
         }
 
         var currentMarkers=[];
@@ -87,7 +87,6 @@
                 document.getElementById("bikelist").style.color = "red";
             }
             });
-            setInterval(bikeFinder,5000);
         }
 
     </script>
@@ -184,7 +183,7 @@
         <INPUT TYPE="text" NAME="long" ID="long" VALUE="longitude">
         <p>Radius (in ft | default = 1000): <INPUT TYPE="text" NAME="radius" ID="radius" VALUE="1000"></p>
         <p> Play Sound? <INPUT TYPE="checkbox" ID="sound"> </p>
-        <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="bikeFinder();">
+        <INPUT TYPE="button" NAME="start" ID="start" VALUE="Start" onClick="startFunc();">
     </FORM>
     <br>
     <h2> Nearby Bikes: <div ID="bikelist"></div></h2>
