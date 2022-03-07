@@ -32,7 +32,7 @@
             var map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
-                center: [position.coords.latitude.value,position.coords.longitude],
+                center: [position.coords.latitude,position.coords.longitude],
                 zoom: 2
             });
         }
@@ -48,8 +48,15 @@
             
         }
 
+        var currentMarkers=[];
+
         function bikeFinder()
         {
+            if (currentMarkers!==null) {
+                for (var i = currentMarkers.length - 1; i >= 0; i--) {
+                currentMarkers[i].remove();
+                }
+            }   
             document.getElementById("bikelist").innerHTML = "Loading...";
             let requestURL = 'https://gbfs.divvybikes.com/gbfs/en/free_bike_status.json';
             var rad = document.getElementById('radius').value;
@@ -70,6 +77,7 @@
                     const marker = new mapboxgl.Marker()
                     .setLngLat([element.lat, element.lon])
                     .addTo(map);
+                    currentMarkers.push(marker);
                 });
             } else {
                 document.getElementById("bikelist").style.color = "red";
