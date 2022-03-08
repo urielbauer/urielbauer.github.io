@@ -35,6 +35,8 @@
 
         var map;
 
+        const myInterval = 0;
+
         function success(position)
         {
             document.getElementById('long').innerText = position.coords.longitude;
@@ -47,7 +49,7 @@
                 zoom: 14
             });
             bikeFinder();
-            setInterval(bikeFinder,(document.getElementById('sinterval').value * 1000));
+            myInterval = setInterval(bikeFinder,(document.getElementById('sinterval').value * 1000));
         }
 
         function fail()
@@ -106,7 +108,7 @@
 
         function endFunc()
         {
-            clearInterval(bikeFinder);
+            clearInterval(myInterval);
             document.getElementById('stop').style.backgroundColor = '#505050';
         }
 
