@@ -7,8 +7,13 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
     <script>
+
+        var currentMarkers=[];
+        var previousbikes = 0;
+
         function startFunc()
         {
+            previousbikes = 0;
             if( navigator.geolocation )
             {
             // Call getCurrentPosition with success and failure callbacks
@@ -39,12 +44,17 @@
 
         function fail()
         {
+            var locationHTML = document.getElementById('locationtext').innerHTML
             document.getElementById('locationtext').innerHTML = "ERROR: LOCATION NOT FOUND";
             document.getElementById('locationtext').style.color = "red";
+            setTimeout(function(){
+                document.getElementById('locationtext').innerHTML = locationHTML;
+                document.getElementById('locationtext').style.color = "black";
+            },5000)
         }
 
-        var currentMarkers=[];
-        var previousbikes = 0;
+        
+        
 
         function bikeFinder()
         {
@@ -96,7 +106,7 @@
             cursor: pointer;
             font-size: 20px;
         }
-        #radius {
+        .text {
         width: 20%;
         padding: 12px 20px;
         margin: 8px 0;
