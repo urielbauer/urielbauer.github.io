@@ -14,10 +14,13 @@
         function onLoadFunc()
         {
             document.getElementById('stop').style.backgroundColor = '#505050';
+            document.getElementById('stop').disabled = true;
         }
 
         function startFunc()
         {
+            document.getElementById('stop').style.backgroundColor = '#ffc7bd';
+            document.getElementById('stop').disabled = false;
             previousbikes = 0;
             if( navigator.geolocation )
             {
@@ -63,7 +66,6 @@
 
         function bikeFinder()
         {
-            document.getElementById('stop').style.backgroundColor = '#ffc7bd';
             mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
             if (currentMarkers!==null) {
                 for (var i = currentMarkers.length - 1; i >= 0; i--) {
