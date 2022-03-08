@@ -88,6 +88,8 @@
                     var beepsound = new Audio('https://orangefreesounds.com/wp-content/uploads/2016/02/Bike-ring-bell.mp3');
                     beepsound.play();
                 }
+                const bikes_marker = document.createElement('div');
+                bikes_marker.className = 'marker';
                 bikes_marker.style.backgroundImage = `url(bikeicon.png)`;
                 bikes.forEach(element => {
                     const marker = new mapboxgl.Marker(bikes_marker)
@@ -182,6 +184,14 @@
         -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
+        }
+
+        .marker {
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
         }
 
     </style>
