@@ -10,11 +10,15 @@
 
         var currentMarkers=[];
         var previousbikes = 0;
+        var programRunning;
+        var map;
+        setInterval(runInterval,(document.getElementById('sinterval').value * 1000));
 
         function onLoadFunc()
         {
             document.getElementById('stop').style.backgroundColor = '#505050';
             document.getElementById('stop').disabled = true;
+            var programRunning = false;
         }
 
         function startFunc()
@@ -33,9 +37,8 @@
             }
         }
 
-        var map;
-        var bikeInterval;
-
+        
+    
 
         function success(position)
         {
@@ -49,7 +52,7 @@
                 zoom: 14
             });
             bikeFinder();
-            bikeInterval = setInterval(bikeFinder,(document.getElementById('sinterval').value * 1000));
+            programRunning == true;
         }
 
         function fail()
@@ -106,9 +109,16 @@
             });
         }
 
+        function runInterval()
+        {
+            if (programRunning == true) {
+                bikeFinder();
+            }
+        }
+
         function endFunc()
         {
-            clearInterval(bikeInterval);
+            programRunning == false;
             document.getElementById('stop').style.backgroundColor = '#505050';
         }
 
