@@ -12,13 +12,13 @@
         var previousbikes = 0;
         var programRunning;
         var map;
-        setInterval(runInterval,(document.getElementById('sinterval').value * 1000));
 
         function onLoadFunc()
         {
             document.getElementById('stop').style.backgroundColor = '#505050';
             document.getElementById('stop').disabled = true;
             var programRunning = false;
+            setInterval(runInterval,(document.getElementById('sinterval').value * 1000));
         }
 
         function startFunc()
