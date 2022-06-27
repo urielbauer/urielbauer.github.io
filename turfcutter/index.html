@@ -1,127 +1,173 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Turf Cutter</title>
-        <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
-        <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js" integrity="sha512-L5K9Bf852XyB+wrvRFGwWzfhVI+TZqJlgwzX9yvrfhILuzIZfrcQO4au9D9eVDnkQ6oqYr9v2QwJdFo+eKE50Q==" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
-        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
-        <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css" type="text/css">
-    </head>
-    <body>
 
-        <table>
+<head>
+    <title>Turf Cutter</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"
+        integrity="sha512-L5K9Bf852XyB+wrvRFGwWzfhVI+TZqJlgwzX9yvrfhILuzIZfrcQO4au9D9eVDnkQ6oqYr9v2QwJdFo+eKE50Q=="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
+        type="text/css">
+    <style>
+        .marker {
+            background-image: url('dot.png');
+            background-size: cover;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <table>
+        <tr>
             <th>
-                <form>
-                    <textarea id="addressinput" style="width: 600px; height: 600px;" ></textarea>
-                    <br>
-                    <INPUT TYPE="button" NAME="start" ID="start" VALUE="Load Addresses" STYLE="background-color: #BDFFC8;" onClick="startFunc();">
-                </form>
+                <h3>Input Addresses Seperated by Line Breaks:</h3>
             </th>
             <th>
-                    <div id='mapdiv' style='width: 600px; height: 600px;'></div>
-                    <br>
-                    <p ID="progress">Waiting for Data</p>
+                <h3 ID="progress">Waiting for Data...</h3>
             </th>
-        </table>
-        <p id="lists"></p>
+        </tr>
+        <tr>
+            <th>
+                <textarea id="addressinput" style="width: 600px; height: 600px;"></textarea>
+            </th>
+            <th>
+                <div id='mapdiv' style='width: 600px; height: 600px;'></div>
+                <br>
+            </th>
+            <th>
+                <div ID="doors"></div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <INPUT TYPE="button" NAME="start" ID="start" VALUE="Load Addresses" STYLE="background-color: #BDFFC8;"
+                    onClick="startFunc();">
+            </th>
+            <th>
+                <INPUT TYPE="button" NAME="print" ID="print" VALUE="Print Turfs" STYLE="background-color: #BDFFC8;"
+                    onClick="printTurfs();">
+            </th>
+        </tr>
+    </table>
+    <p id="lists"></p>
 
-        <script>
-            
+    <script>
 
 
-            var addresspoints = [];
-            var turflist = [];
 
-            mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWxiYXVlciIsImEiOiJjbDBoMGRpcXkwM3ZpM2NtajJqbDBpYXJvIn0.Lw8jWMcHPlu6a3VJy5jsKw';
-            const map = new mapboxgl.Map({
-                container: 'mapdiv',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                center: [-73.935242,40.730610],
-                zoom: 8
-            });
-            const draw = new MapboxDraw({
-                displayControlsDefault: false,
-                controls: {
-                    polygon: true,
-                    trash: true
-                },
-                defaultMode: 'draw_polygon'
-            });
-            map.addControl(draw);
-            map.on('draw.create',updateArea);
-            map.on('draw.delete',updateArea);
-            map.on('draw.update',updateArea);
+        var addresspoints = [];
+        var turflist = [];
+        var turfcolors = ["#ff0000","#00ff00","#0000ff","#9900cc","#ff9933","#669999","#663300","#ff99ff","#66ffff","#ff0000","#00ff00","#0000ff","#9900cc","#ff9933","#669999","#663300","#ff99ff","#66ffff"]
 
-            function startFunc()
-            {
-                let inputtext = document.getElementById("addressinput").value;
-                let newstrings = inputtext.split('\n');
-                document.getElementById("progress").innerHTML = "Loading 0/" + newstrings.length;
-                const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-                newstrings.forEach( (address, i) => { setTimeout(() => {
+        mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWwtbWVyaWRpYW4iLCJhIjoiY2wyaHN1bzdxMDBpbTNvcGoxeGI0MXBubSJ9.-CPrgMJMxmOb5CAlU_2F2w';
+        const map = new mapboxgl.Map({
+            container: 'mapdiv',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-73.935242, 40.730610],
+            zoom: 8
+        });
+        const draw = new MapboxDraw({
+            displayControlsDefault: false,
+            controls: {
+                polygon: true,
+                trash: true
+            },
+            defaultMode: 'draw_polygon'
+        });
+        map.addControl(draw);
+        map.on('draw.create', updateArea);
+        map.on('draw.delete', updateArea);
+        map.on('draw.update', updateArea);
+
+        function startFunc() {
+            let inputtext = document.getElementById("addressinput").value;
+            let newstrings = inputtext.split('\n');
+            document.getElementById("progress").innerHTML = "Loading 0/" + newstrings.length;
+            const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+            newstrings.forEach((address, i) => {
+                setTimeout(() => {
                     mapboxClient.geocoding
-                    .forwardGeocode({
-                        query: address,
-                        autocomplete: false,
-                        limit: 1
-                    })
-                    .send()
-                    .then((response) => {
-                        if (
-                        !response ||
-                        !response.body ||
-                        !response.body.features ||
-                        !response.body.features.length
-                        ) {
-                            console.error('Invalid response:');
-                            console.error(response);
-                            return;
-                        }
-                        const feature = response.body.features[0];
-                        const marker = new mapboxgl.Marker()
-                        .setLngLat(feature.center)
-                        .addTo(map);
-                        const lprop = {name: ""};
-                        lprop.name = address;
-                        var location = turf.point(feature.center, lprop);
-                        addresspoints.push(location);
-                    });
-                    document.getElementById("progress").innerHTML = "Loading " + (i+1).toString() + "/" + newstrings.length;
-                    }, i*450);
-                });
-            }
+                        .forwardGeocode({
+                            query: address,
+                            autocomplete: false,
+                            limit: 1
+                        })
+                        .send()
+                        .then((response) => {
+                            if (
+                                !response ||
+                                !response.body ||
+                                !response.body.features ||
+                                !response.body.features.length
+                            ) {
+                                console.error('Invalid response:');
+                                console.error(response);
+                                return;
+                            }
+                            const feature = response.body.features[0];
+                            const mkdiv = document.createElement('div');
+                            mkdiv.className = 'marker';
+                            const marker = new mapboxgl.Marker(mkdiv)
+                                .setLngLat(feature.center)
+                                .addTo(map);
+                            const lprop = { name: "" };
+                            lprop.name = address;
+                            var location = turf.point(feature.center, lprop);
+                            addresspoints.push(location);
+                        });
+                    document.getElementById("progress").innerHTML = "Loading " + (i + 1).toString() + "/" + newstrings.length;
+                }, i * 150);
+            });
+            document.getElementById("progress").innerHTML = "Turf Cutter Ready:";
+        }
 
-            function updateArea(e) {
-                document.getElementById("lists").innerHTML = "";
-                var data = draw.getAll();
-                var collection = turf.featureCollection(addresspoints);
-                data.features.forEach((shape, index) => {
-                    console.log(shape);
-                    console.log(collection);
-                    var ptswithin = turf.pointsWithinPolygon(collection,shape);
-                    document.getElementById("lists").innerHTML += "Turf " + (index+1) + " (" + ptswithin.features.length + " doors): <br>";
-                    ptswithin.features.forEach(feat => {
-                        document.getElementById("lists").innerHTML += feat.properties.name;
-                        document.getElementById("lists").innerHTML += "<br>";
-                    });
-                    console.log(turflist);
+        function updateArea(e) {
+            document.getElementById("doors").innerHTML = "<h4>Doors:</h4>";
+            var data = draw.getAll();
+            var collection = turf.featureCollection(addresspoints);
+            data.features.forEach((shape, index) => {
+                var ptswithin = turf.pointsWithinPolygon(collection, shape);
+                document.getElementById("doors").innerHTML += "<p style=\"color: " + turfcolors[index] + "\">Turf " + (index + 1) + ": " + ptswithin.features.length + " doors</p>";
+            });
+        }
+
+        function printTurfs() {
+            document.getElementById("lists").innerHTML = "<br><br>";
+            var data = draw.getAll();
+            var collection = turf.featureCollection(addresspoints);
+            data.features.forEach((shape, index) => {
+                var ptswithin = turf.pointsWithinPolygon(collection, shape);
+                document.getElementById("lists").innerHTML += "<h2>Turf " + (index + 1) + " (" + ptswithin.features.length + " doors):</h2>";
+                ptswithin.features.forEach(feat => {
+                    document.getElementById("lists").innerHTML += feat.properties.name;
+                    document.getElementById("lists").innerHTML += "<br>";
                 });
                 document.getElementById("lists").innerHTML += "<br>";
-            }
-            
+            });
+            document.getElementById("lists").innerHTML += "<br>";
+        }
 
 
 
-        </script>
-        
-        
+
+    </script>
 
 
-        
-    </body>
+
+
+
+</body>
 
 
 </html>
