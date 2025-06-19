@@ -27,11 +27,11 @@
 </head>
 
 <body>
-    <h1>Turf Cutter</h1>
+    <h1>Map Cutter</h1>
     <p>1. Enter addresses seperated by line breaks on the left (or copy and paste from spreadsheet)<br>
         2. Press "Load Addresses" to upload addresses into the map on the right<br>
         3. Draw turfs on the map<br>
-        4. Click "Print Turfs" to convert map turfs into seperated lists of addresses<br>
+        4. Click "Print Lists" to convert map turfs into seperated lists of addresses<br>
         5. Copy addresses into a spreadsheet or other program
     </p>
     <table>
@@ -62,7 +62,7 @@
                     onClick="startFunc();">
             </th>
             <th>
-                <INPUT TYPE="button" NAME="print" ID="print" VALUE="Print Turfs" STYLE="background-color: #BDFFC8;"
+                <INPUT TYPE="button" NAME="print" ID="print" VALUE="Print Lists" STYLE="background-color: #BDFFC8;"
                     onClick="printTurfs();">
             </th>
         </tr>
@@ -138,16 +138,16 @@
                     document.getElementById("progress").innerHTML = "Loading " + (i + 1).toString() + "/" + newstrings.length + errorstring;
                 }, i * 150);
             });
-            document.getElementById("progress").innerHTML = "Turf Cutter Ready:";
+            document.getElementById("progress").innerHTML = "Map Cutter Ready:";
         }
 
         function updateArea(e) {
-            document.getElementById("doors").innerHTML = "<h4>Doors:</h4>";
+            document.getElementById("doors").innerHTML = "<h4>Addresses:</h4>";
             var data = draw.getAll();
             var collection = turf.featureCollection(addresspoints);
             data.features.forEach((shape, index) => {
                 var ptswithin = turf.pointsWithinPolygon(collection, shape);
-                document.getElementById("doors").innerHTML += "<p style=\"color: " + turfcolors[index] + "\">Turf " + (index + 1) + ": " + ptswithin.features.length + " doors</p>";
+                document.getElementById("doors").innerHTML += "<p style=\"color: " + turfcolors[index] + "\">List " + (index + 1) + ": " + ptswithin.features.length + " doors</p>";
             });
         }
 
@@ -157,7 +157,7 @@
             var collection = turf.featureCollection(addresspoints);
             data.features.forEach((shape, index) => {
                 var ptswithin = turf.pointsWithinPolygon(collection, shape);
-                document.getElementById("lists").innerHTML += "<h2>Turf " + (index + 1) + " (" + ptswithin.features.length + " doors):</h2>";
+                document.getElementById("lists").innerHTML += "<h2>List " + (index + 1) + " (" + ptswithin.features.length + " addresses):</h2>";
                 ptswithin.features.forEach(feat => {
                     document.getElementById("lists").innerHTML += feat.properties.name;
                     document.getElementById("lists").innerHTML += "<br>";
