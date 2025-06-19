@@ -89,21 +89,7 @@
                 polygon: true,
                 trash: true
             },
-            defaultMode: 'draw_polygon',
-            styles: {
-                'id': 'gl-draw-polygon-fill-inactive',
-                'type': 'fill',
-                'filter': ['all',
-                ['==', 'active', 'false'],
-                ['==', '$type', 'Polygon'],
-                ['!=', 'mode', 'static']
-                ],
-                'paint': {
-                'fill-color': ['get', 'user_fillcolor'],
-                'fill-outline-color': '#3bb2d0',
-                'fill-opacity': 0.1
-                }
-            }
+            defaultMode: 'draw_polygon'
         });
         map.addControl(draw);
         map.on('draw.create', updateArea);
