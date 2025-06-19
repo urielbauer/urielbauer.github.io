@@ -89,7 +89,21 @@
                 polygon: true,
                 trash: true
             },
-            defaultMode: 'draw_polygon'
+            defaultMode: 'draw_polygon',
+            styles: {
+                'id': 'gl-draw-polygon-fill-inactive',
+                'type': 'fill',
+                'filter': ['all',
+                ['==', 'active', 'false'],
+                ['==', '$type', 'Polygon'],
+                ['!=', 'mode', 'static']
+                ],
+                'paint': {
+                'fill-color': ['get', 'user_fillcolor'],
+                'fill-outline-color': '#3bb2d0',
+                'fill-opacity': 0.1
+                }
+            }
         });
         map.addControl(draw);
         map.on('draw.create', updateArea);
@@ -147,7 +161,7 @@
             var data = draw.getAll();
             var collection = turf.featureCollection(addresspoints);
             data.features.forEach((shape, index) => {
-                draw.setFeatureProperty(shape.id, 'fill-color', turfcolors[index]);
+                draw.setFeatureProperty(shape.id, 'fillcolor', turfcolors[index]);
                 var ptswithin = turf.pointsWithinPolygon(collection, shape);
                 document.getElementById("doors").innerHTML += "<p style=\"color: " + turfcolors[index] + "\">List " + (index + 1) + ": " + ptswithin.features.length + " doors</p>";
             });
