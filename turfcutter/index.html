@@ -147,7 +147,6 @@
             var data = draw.getAll();
             var collection = turf.featureCollection(addresspoints);
             data.features.forEach((shape, index) => {
-                draw.setFeatureProperty(shape, 'fill-color', turfcolors[index]);
                 var ptswithin = turf.pointsWithinPolygon(collection, shape);
                 document.getElementById("doors").innerHTML += "<p style=\"color: " + turfcolors[index] + "\">List " + (index + 1) + ": " + ptswithin.features.length + " doors</p>";
             });
