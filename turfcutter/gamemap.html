@@ -42,9 +42,15 @@
           bbox: [41.008314747275286, -74.36266085582834,40.41985356864263, -73.24522798280488],
         };
         const voronoiPolygons = turf.voronoi(c_airports, options);
+        map.getSource('voronoi').setData({
+            type: 'FeatureCollection',
+            features: voronoiPolygons
+          });
         map.on('load', () => {
           map.addLayer({
-              id: 'voronoiPolygons'
+              id: 'layervoronoi',
+              type: 'fill',
+              source: 'voronoi'
           })});
 
     </script>
