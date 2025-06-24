@@ -34,19 +34,19 @@
             center: [-73.935242, 40.730610],
             zoom: 8
         });
-        const marker_jfk = new mapboxgl.Marker()
-            .setLngLat([40.64461220895261, -73.77973027359744])
-            .addTo(map);
-        const marker_lga = new mapboxgl.Marker()
-            .setLngLat([40.77664198619704, -73.87425177014825])
-            .addTo(map);
+        const x_jfk = turf.point([40.64461220895261, -73.77973027359744],{name:"JFK"});
+        const x_lga =  turf.point([40.77664198619704, -73.87425177014825],{name:"LGA"});
+        const c_airports = turf.featureCollection([x_jfk,x_lga]);
 
         const options = {
           bbox: [41.008314747275286, -74.36266085582834,40.41985356864263, -73.24522798280488],
         };
         const points = [marker_jfk,marker_lga];
-        const voronoiPolygons = turf.voronoi(points, options);
-       
+        const voronoiPolygons = turf.voronoi(c_airports, options);
+        map.on('load', () => {
+          map.addLayer({
+              id: 'voronoiPolygons'
+          })});
 
     </script>
 
