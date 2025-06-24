@@ -38,28 +38,42 @@
         
         
         map.on('load', () => {
-            /* var x_jfk = turf.point([40.64461220895261, -73.77973027359744],{name:"JFK"});
-            var x_lga =  turf.point([40.77664198619704, -73.87425177014825],{name:"LGA"}); */
-            const options = {
-              bbox: [41.008314747275286, -74.36266085582834,40.41985356864263, -73.24522798280488],
-            };
-            const points = turf.randomPoint(100, options);
-            const voronoiPolygons = turf.voronoi(points, options);
-             map.addSource('voronoiPolygons', {
-                type: "geojson",
+              const options = {
+                bbox: [-70, 40, -60, 60]
+              } as any;
+              const points = turf.randomPoint(100, options);
+              const voronoiPolygons = turf.voronoi(points, options);
+        
+              map.addSource('points', {
+                type: 'geojson',
+                data: points
+              });
+        
+              map.addLayer({
+                id: 'points',
+                type: 'circle',
+                source: 'points',
+                paint: {
+                  'circle-radius': 6,
+                  'circle-color': '#0000ff'
+                }
+              });
+        
+              map.addSource('voronoiPolygons', {
+                type: 'geojson',
                 data: voronoiPolygons
               });
-            
+        
               map.addLayer({
-                id: "voronoiPolygons",
-                type: "fill",
-                source: "voronoiPolygons",
-                    paint: {
-                      'fill-color': '#0000ff',
-                      'fill-opacity': 0.4
-                    }
+                id: 'voronoiPolygons',
+                type: 'fill',
+                source: 'voronoiPolygons',
+                paint: {
+                  'fill-color': '#0000ff',
+                  'fill-opacity': 0.2
+                }
               });
-        });
+            });
 
     </script>
 
