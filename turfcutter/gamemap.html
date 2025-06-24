@@ -42,24 +42,26 @@
           bbox: [41.008314747275286, -74.36266085582834,40.41985356864263, -73.24522798280488],
         };
         const voronoiPolygons = turf.voronoi(c_airports, options);
-         map.addSource('airVoronoi', {
-            "type": "geojson",
-            "data": voronoiPolygons
-          });
-        
-          map.addLayer({
-            "id": "airVoronoi",
-            "type": "fill",
-            "source": "airVoronoi",
-            'layout': {
-        
-            },
-            'paint': {
-              'fill-color': 'olive',
-              'fill-opacity': 0.7,
-              'fill-outline-color':"black"
-            }
-          });
+        map.on('load', function() {
+             map.addSource('airVoronoi', {
+                "type": "geojson",
+                "data": voronoiPolygons
+              });
+            
+              map.addLayer({
+                "id": "airVoronoi",
+                "type": "fill",
+                "source": "airVoronoi",
+                'layout': {
+            
+                },
+                'paint': {
+                  'fill-color': 'olive',
+                  'fill-opacity': 0.7,
+                  'fill-outline-color':"black"
+                }
+              });
+        });
 
     </script>
 
