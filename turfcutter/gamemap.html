@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Game Map</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
+        type="text/css">
+    <style> 
+        h1,h2,h3,p,div {
+            font-family:sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>Game Map</h2>
+    <div id='mapdiv' style='width: 90%; height: 600px;margin-left: auto; margin-right: auto;'></div>
+
+    <script>
+
+        var addresspoints = [];
+        var turflist = [];
+        var turfcolors = ["#ff0000", "#00ff00", "#0000ff", "#9900cc", "#ff9933", "#669999", "#663300", "#ff99ff", "#66ffff", "#ff0000", "#00ff00", "#0000ff", "#9900cc", "#ff9933", "#669999", "#663300", "#ff99ff", "#66ffff"]
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWwtbWVyaWRpYW4iLCJhIjoiY2wyaHN1bzdxMDBpbTNvcGoxeGI0MXBubSJ9.-CPrgMJMxmOb5CAlU_2F2w';
+        const map = new mapboxgl.Map({
+            container: 'mapdiv',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-73.935242, 40.730610],
+            zoom: 8
+        });
+
+
+    </script>
+
+</body>
+
+</html>
