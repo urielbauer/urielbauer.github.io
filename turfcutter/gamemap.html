@@ -40,7 +40,7 @@
         map.on('load', () => {
               const options = {
                 bbox: [-70, 40, -60, 60]
-              } as any;
+              };
               const points = turf.randomPoint(100, options);
               const voronoiPolygons = turf.voronoi(points, options);
         
