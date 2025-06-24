@@ -37,22 +37,22 @@
         
         
         map.on('load', function() {
-            const x_jfk = turf.point([40.64461220895261, -73.77973027359744],{name:"JFK"});
-            const x_lga =  turf.point([40.77664198619704, -73.87425177014825],{name:"LGA"});
-            const c_airports = turf.featureCollection([x_jfk,x_lga]);
+            var x_jfk = turf.point([40.64461220895261, -73.77973027359744],{name:"JFK"});
+            var x_lga =  turf.point([40.77664198619704, -73.87425177014825],{name:"LGA"});
+            var c_airports = turf.featureCollection([x_jfk,x_lga]);
             const options = {
               bbox: [41.008314747275286, -74.36266085582834,40.41985356864263, -73.24522798280488],
             };
             const voronoiPolygons = turf.voronoi(c_airports, options);
-             map.addSource('airVoronoi', {
+             map.addSource('voronoiPolygons', {
                 "type": "geojson",
                 "data": voronoiPolygons
               });
             
               map.addLayer({
-                "id": "airVoronoi",
+                "id": "voronoiPolygons",
                 "type": "fill",
-                "source": "airVoronoi",
+                "source": "voronoiPolygons",
                 'layout': {
             
                 },
