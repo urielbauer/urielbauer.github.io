@@ -32,7 +32,8 @@
             container: 'mapdiv',
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [-73.935242, 40.730610],
-            zoom: 8
+            zoom: 8,
+            attributionControl: false
         });
         
         
@@ -45,22 +46,18 @@
             const points = turf.randomPoint(100, options);
             const voronoiPolygons = turf.voronoi(points, options);
              map.addSource('voronoiPolygons', {
-                "type": "geojson",
-                "data": voronoiPolygons
+                type: "geojson",
+                data: voronoiPolygons
               });
             
               map.addLayer({
-                "id": "voronoiPolygons",
-                "type": "fill",
-                "source": "voronoiPolygons",
-                'layout': {
-            
-                },
-                'paint': {
-                  'fill-color': 'olive',
-                  'fill-opacity': 0.7,
-                  'fill-outline-color':"black"
-                }
+                id: "voronoiPolygons",
+                type: "fill",
+                source: "voronoiPolygons",
+                    paint: {
+                      'fill-color': '#0000ff',
+                      'fill-opacity': 0.4
+                    }
               });
         });
 
