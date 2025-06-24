@@ -19,12 +19,11 @@
 </head>
 
 <body>
-    <h2>Game Map</h2>
-    <div id='mapdiv' style='width: 90%; height: 600px;margin-left: auto; margin-right: auto;'></div>
+    <h2 style="text-align:center;">Game Map</h2>
+    <div id='mapdiv' style='width: 90%; height: 700px;margin-left: auto; margin-right: auto;'></div>
 
     <script>
 
-        var addresspoints = [];
         var turflist = [];
         var turfcolors = ["#ff0000", "#00ff00", "#0000ff", "#9900cc", "#ff9933", "#669999", "#663300", "#ff99ff", "#66ffff", "#ff0000", "#00ff00", "#0000ff", "#9900cc", "#ff9933", "#669999", "#663300", "#ff99ff", "#66ffff"]
 
@@ -35,7 +34,19 @@
             center: [-73.935242, 40.730610],
             zoom: 8
         });
+        const marker_jfk = new mapboxgl.Marker()
+            .setLngLat([40.64461220895261, -73.77973027359744])
+            .addTo(map);
+        const marker_lga = new mapboxgl.Marker()
+            .setLngLat([40.77664198619704, -73.87425177014825])
+            .addTo(map);
 
+        const options = {
+          bbox: [41.008314747275286, -74.36266085582834,40.41985356864263, -73.24522798280488],
+        };
+        const points = [marker_jfk,marker_lga];
+        const voronoiPolygons = turf.voronoi(points, options);
+       
 
     </script>
 
