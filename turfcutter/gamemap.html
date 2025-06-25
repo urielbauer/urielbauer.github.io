@@ -20,7 +20,7 @@
 
 <body>
     <h2 style="text-align:center;">Game Map</h2>
-    <div style="text-align:center;display: flex;justify-content:space-evenly;"><p style="color:blue;">Airports</p><p style="color:green;">Zoos</p></div>
+    <div style="text-align:center;display: flex;justify-content:space-evenly;"><p style="color:blue;" onclick="airportshow()">Airports</p><p style="color:green;">Zoos</p></div>
     <div id='mapdiv' style='width: 90%; height: 700px;margin-left: auto; margin-right: auto;'></div>
 
     <script>
@@ -66,6 +66,9 @@
                 id: 'points',
                 type: 'circle',
                 source: 'points',
+                layout: {
+                    'visibility': 'none'
+                },
                 paint: {
                   'circle-radius': 6,
                   'circle-color': '#0000ff'
@@ -82,6 +85,9 @@
                 'id': 'outline',
                 'type': 'line',
                 'source': 'voronoiPolygons',
+                  'layout': {
+                    'visibility': 'none'
+                },
                 'paint': {
                     'line-color': '#00f',
                     'line-width': 2
@@ -91,6 +97,9 @@
                 id: 'zoopoints',
                 type: 'circle',
                 source: 'zoopoints',
+                layout: {
+                    'visibility': 'none'
+                },
                 paint: {
                   'circle-radius': 6,
                   'circle-color': '#0d0'
@@ -106,12 +115,28 @@
                 'id': 'zoooutline',
                 'type': 'line',
                 'source': 'zoovoronoi',
+                'layout': {
+                    'visibility': 'none'
+                },
                 'paint': {
                     'line-color': '#0d0',
                     'line-width': 2
                 }
               });
             });
+        function airportshow() {
+            layer = document.getElementById('outline');
+            const visibility = map.getLayoutProperty(layer,'visibility');
+            if (visibility === 'visible') {
+                map.setLayoutProperty(layer, 'visibility', 'none');
+            } else {
+                map.setLayoutProperty(
+                    layer,
+                    'visibility',
+                    'visible'
+                );
+            }
+        }
 
     </script>
 
