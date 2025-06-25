@@ -20,12 +20,11 @@
 
 <body>
     <h2 style="text-align:center;">Game Map</h2>
+    <div style="text-align:center;display: flex;justify-content:space-evenly;"><p style="color:blue;">Airports</p><p style="color:green;">Zoos</p></div>
     <div id='mapdiv' style='width: 90%; height: 700px;margin-left: auto; margin-right: auto;'></div>
 
     <script>
 
-        var turflist = [];
-        var turfcolors = ["#ff0000", "#00ff00", "#0000ff", "#9900cc", "#ff9933", "#669999", "#663300", "#ff99ff", "#66ffff", "#ff0000", "#00ff00", "#0000ff", "#9900cc", "#ff9933", "#669999", "#663300", "#ff99ff", "#66ffff"]
 
         mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWwtbWVyaWRpYW4iLCJhIjoiY2wyaHN1bzdxMDBpbTNvcGoxeGI0MXBubSJ9.-CPrgMJMxmOb5CAlU_2F2w';
         const map = new mapboxgl.Map({
@@ -38,17 +37,29 @@
         
         
         map.on('load', () => {
-              const options = {
-                bbox: [-73.664,40.923,-74.285,40.484]
-              };
+                const options = {
+                    bbox: [-74.5, 40.5, -73, 41],
+                };
                 var jfk = turf.point([-73.7799,40.6445]);
                 var lga = turf.point([-73.8742,40.7766]);
+                var bxzoo = turf.point([-73.87683,40.85025]);
+                var qzoo = turf.point([-73.84947,40.74429]);
+                var cpzoo = turf.point([-73.97199,40.767816]);
+                var bkzoo = turf.point([-73.96505,40.66435]);
+                var sizoo = turf.point([-74.11536,40.62509]);
               const points = turf.featureCollection([jfk,lga]);
-              const voronoiPolygons = turf.voronoi(points, options);
+                const zoopoints = turf.featureCollection([bxzoo,qzoo,cpzoo,bkzoo,sizoo])
+              const voronoiPolygons = turf.voronoi(points,options);
+                const zoovoronoi = turf.voronoi(zoopoints,options);
+
         
               map.addSource('points', {
                 type: 'geojson',
                 data: points
+              });
+            map.addSource('zoopoints', {
+                type: 'geojson',
+                data: zoopoints
               });
         
               map.addLayer({
@@ -66,13 +77,38 @@
                 data: voronoiPolygons
               });
         
+
               map.addLayer({
-                id: 'voronoiPolygons',
-                type: 'fill',
-                source: 'voronoiPolygons',
+                'id': 'outline',
+                'type': 'line',
+                'source': 'voronoiPolygons',
+                'paint': {
+                    'line-color': '#00f',
+                    'line-width': 2
+                }
+              });
+            map.addLayer({
+                id: 'zoopoints',
+                type: 'circle',
+                source: 'zoopoints',
                 paint: {
-                  'fill-color': '#0000ff',
-                  'fill-opacity': 0.2
+                  'circle-radius': 6,
+                  'circle-color': '#0d0'
+                }
+              });
+        
+              map.addSource('zoovoronoi', {
+                type: 'geojson',
+                data: zoovoronoi
+              });
+        
+              map.addLayer({
+                'id': 'zoooutline',
+                'type': 'line',
+                'source': 'zoovoronoi',
+                'paint': {
+                    'line-color': '#0d0',
+                    'line-width': 2
                 }
               });
             });
