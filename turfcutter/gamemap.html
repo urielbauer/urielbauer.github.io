@@ -2,142 +2,216 @@
 <html>
 
 <head>
-    <title>Game Map</title>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
-    <script src="https://unpkg.com/@turf/turf@7/turf.min.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
-        type="text/css">
-    <style> 
-        h1,h2,h3,p,div {
-            font-family:sans-serif;
-        }
-    </style>
+  <title>Game Map</title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+  <script src="https://unpkg.com/@turf/turf@7/turf.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
+    type="text/css">
+  <style>
+    h1,
+    h2,
+    h3,
+    p,
+    div {
+      font-family: sans-serif;
+    }
+  </style>
 
 </head>
 
 <body>
-    <h2 style="text-align:center;">Game Map</h2>
-    <div style="text-align:center;display: flex;justify-content:space-evenly;"><p style="color:blue;" onclick="airportshow()">Airports</p><p style="color:green;">Zoos</p></div>
-    <div id='mapdiv' style='width: 90%; height: 700px;margin-left: auto; margin-right: auto;'></div>
+  <h2 style="text-align:center;">Game Map</h2>
+  <div style="text-align:center;display: flex;justify-content:space-evenly;">
+    <p style="color:blue;border-color: blue;border-width: 1px;" onclick="airportshow()">Airports</p>
+    <p style="color:green;border-color: green;border-width: 1px;" onclick="zooshow()">Zoos</p>
+    <p style="color:red;border-color: red;border-width: 1px;" onclick="golfshow()">Golf Courses</p>
+  </div>
+  <div id='mapdiv' style='width: 90%; height: 700px;margin-left: auto; margin-right: auto;'></div>
 
-    <script>
+  <script>
 
 
-        mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWwtbWVyaWRpYW4iLCJhIjoiY2wyaHN1bzdxMDBpbTNvcGoxeGI0MXBubSJ9.-CPrgMJMxmOb5CAlU_2F2w';
-        const map = new mapboxgl.Map({
-            container: 'mapdiv',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-73.935242, 40.730610],
-            zoom: 8,
-            attributionControl: false
-        });
-        
-        
-        map.on('load', () => {
-                const options = {
-                    bbox: [-74.5, 40.5, -73, 41],
-                };
-                var jfk = turf.point([-73.7799,40.6445]);
-                var lga = turf.point([-73.8742,40.7766]);
-                var bxzoo = turf.point([-73.87683,40.85025]);
-                var qzoo = turf.point([-73.84947,40.74429]);
-                var cpzoo = turf.point([-73.97199,40.767816]);
-                var bkzoo = turf.point([-73.96505,40.66435]);
-                var sizoo = turf.point([-74.11536,40.62509]);
-              const points = turf.featureCollection([jfk,lga]);
-                const zoopoints = turf.featureCollection([bxzoo,qzoo,cpzoo,bkzoo,sizoo])
-              const voronoiPolygons = turf.voronoi(points,options);
-                const zoovoronoi = turf.voronoi(zoopoints,options);
+    mapboxgl.accessToken = 'pk.eyJ1IjoidXJpZWwtbWVyaWRpYW4iLCJhIjoiY2wyaHN1bzdxMDBpbTNvcGoxeGI0MXBubSJ9.-CPrgMJMxmOb5CAlU_2F2w';
+    const map = new mapboxgl.Map({
+      container: 'mapdiv',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-73.935242, 40.730610],
+      zoom: 8,
+      attributionControl: false
+    });
 
-        
-              map.addSource('points', {
-                type: 'geojson',
-                data: points
-              });
-            map.addSource('zoopoints', {
-                type: 'geojson',
-                data: zoopoints
-              });
-        
-              map.addLayer({
-                id: 'points',
-                type: 'circle',
-                source: 'points',
-                layout: {
-                    'visibility': 'none'
-                },
-                paint: {
-                  'circle-radius': 6,
-                  'circle-color': '#0000ff'
-                }
-              });
-        
-              map.addSource('voronoiPolygons', {
-                type: 'geojson',
-                data: voronoiPolygons
-              });
-        
 
-              map.addLayer({
-                'id': 'outline',
-                'type': 'line',
-                'source': 'voronoiPolygons',
-                  'layout': {
-                    'visibility': 'none'
-                },
-                'paint': {
-                    'line-color': '#00f',
-                    'line-width': 2
-                }
-              });
-            map.addLayer({
-                id: 'zoopoints',
-                type: 'circle',
-                source: 'zoopoints',
-                layout: {
-                    'visibility': 'none'
-                },
-                paint: {
-                  'circle-radius': 6,
-                  'circle-color': '#0d0'
-                }
-              });
-        
-              map.addSource('zoovoronoi', {
-                type: 'geojson',
-                data: zoovoronoi
-              });
-        
-              map.addLayer({
-                'id': 'zoooutline',
-                'type': 'line',
-                'source': 'zoovoronoi',
-                'layout': {
-                    'visibility': 'none'
-                },
-                'paint': {
-                    'line-color': '#0d0',
-                    'line-width': 2
-                }
-              });
-            });
-        function airportshow() {
-            const visibility = map.getLayoutProperty('outline','visibility');
-            if (visibility === 'visible') {
-                map.setLayoutProperty('outline', 'visibility', 'none');
-            } else {
-                map.setLayoutProperty(
-                    'outline',
-                    'visibility',
-                    'visible'
-                );
-            }
+    map.on('load', () => {
+      const options = {
+        bbox: [-74.5, 40.5, -73, 41],
+      };
+      var jfk = turf.point([-73.7799, 40.6445]);
+      var lga = turf.point([-73.8742, 40.7766]);
+      var bxzoo = turf.point([-73.87683, 40.85025]);
+      var qzoo = turf.point([-73.84947, 40.74429]);
+      var cpzoo = turf.point([-73.97199, 40.767816]);
+      var bkzoo = turf.point([-73.96505, 40.66435]);
+      var sizoo = turf.point([-74.11536, 40.62509]);
+      var dykergolf = turf.point([-74.02049, 40.61695]);
+      var marinegolf = turf.point([-73.91409, 40.60039]);
+      var forestgolf = turf.point([-73.86667, 40.69719]);
+      var kissenagolf = turf.point([-73.80002, 40.74243]);
+      var clearviewgolf = turf.point([-73.78943, 40.78670]);
+      var ferrygolf = turf.point([-73.83451, 40.81253]);
+      var pelhamgolf = turf.point([-73.80881, 40.87388]);
+      var mosholugolf = turf.point([-73.88128, 40.88923]);
+      var vcpgolf = turf.point([-73.89240, 40.88895]);
+      var douglasgolf = turf.point([-73.73159, 40.75259]);
+      var sisilvergolf = turf.point([-74.09796, 40.62261]);
+      var sirichmondgolf = turf.point([-74.11305, 40.58315]);
+      const points = turf.featureCollection([jfk, lga]);
+      const zoopoints = turf.featureCollection([bxzoo, qzoo, cpzoo, bkzoo, sizoo])
+      const golfpoints = turf.featureCollection([dykergolf, marinegolf, forestgolf, kissenagolf, clearviewgolf, ferrygolf, pelhamgolf, mosholugolf, vcpgolf, douglasgolf, sisilvergolf, sirichmondgolf])
+      const voronoiPolygons = turf.voronoi(points, options);
+      const zoovoronoi = turf.voronoi(zoopoints, options);
+      const golfvoronoi = turf.voronoi(golfpoints, options);
+
+
+      map.addSource('points', {
+        type: 'geojson',
+        data: points
+      });
+      map.addSource('zoopoints', {
+        type: 'geojson',
+        data: zoopoints
+      });
+      map.addSource('golfpoints', {
+        type: 'geojson',
+        data: golfpoints
+      });
+
+      map.addLayer({
+        id: 'points',
+        type: 'circle',
+        source: 'points',
+        layout: {
+          'visibility': 'none'
+        },
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#00f'
         }
+      });
 
-    </script>
+      map.addLayer({
+        id: 'zoopoints',
+        type: 'circle',
+        source: 'zoopoints',
+        layout: {
+          'visibility': 'none'
+        },
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#0d0'
+        }
+      });
+      map.addLayer({
+        id: 'golfpoints',
+        type: 'circle',
+        source: 'golfpoints',
+        layout: {
+          'visibility': 'none'
+        },
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#d00'
+        }
+      });
+
+      map.addSource('voronoiPolygons', {
+        type: 'geojson',
+        data: voronoiPolygons
+      });
+      map.addSource('zoovoronoi', {
+        type: 'geojson',
+        data: zoovoronoi
+      });
+      map.addSource('golfvoronoi', {
+        type: 'geojson',
+        data: golfvoronoi
+      });
+
+      map.addLayer({
+        'id': 'outline',
+        'type': 'line',
+        'source': 'voronoiPolygons',
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'line-color': '#00f',
+          'line-width': 2
+        }
+      });
+
+      map.addLayer({
+        'id': 'zoooutline',
+        'type': 'line',
+        'source': 'zoovoronoi',
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'line-color': '#0d0',
+          'line-width': 2
+        }
+      });
+
+      map.addLayer({
+        'id': 'golfoutline',
+        'type': 'line',
+        'source': 'golfvoronoi',
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'line-color': '#d00',
+          'line-width': 2
+        }
+      });
+      
+    });
+    function airportshow() {
+      const visibility = map.getLayoutProperty('outline', 'visibility');
+      if (visibility === 'visible') {
+        map.setLayoutProperty('outline', 'visibility', 'none');
+        map.setLayoutProperty('points', 'visibility', 'none');
+      } else {
+        map.setLayoutProperty('outline', 'visibility', 'visible');
+        map.setLayoutProperty('points', 'visibility', 'visible');
+      }
+    };
+    function zooshow() {
+      const visibility = map.getLayoutProperty('zoooutline', 'visibility');
+      if (visibility === 'visible') {
+        map.setLayoutProperty('zoooutline', 'visibility', 'none');
+        map.setLayoutProperty('zoopoints', 'visibility', 'none');
+      } else {
+        map.setLayoutProperty('zoooutline', 'visibility', 'visible');
+        map.setLayoutProperty('zoopoints', 'visibility', 'visible');
+      }
+    };
+    function golfshow() {
+      const visibility = map.getLayoutProperty('golfoutline', 'visibility');
+      if (visibility === 'visible') {
+        map.setLayoutProperty('golfoutline', 'visibility', 'none');
+        map.setLayoutProperty('golfpoints', 'visibility', 'none');
+      } else {
+        map.setLayoutProperty('golfoutline', 'visibility', 'visible');
+        map.setLayoutProperty('golfpoints', 'visibility', 'visible');
+      }
+    };
+
+
+  </script>
 
 </body>
 
