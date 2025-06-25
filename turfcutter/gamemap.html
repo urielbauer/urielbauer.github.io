@@ -125,7 +125,7 @@
               });
             });
         function airportshow() {
-            layer = document.getElementById('outline');
+            const layer = document.getElementById('outline');
             const visibility = map.getLayoutProperty(layer,'visibility');
             if (visibility === 'visible') {
                 map.setLayoutProperty(layer, 'visibility', 'none');
