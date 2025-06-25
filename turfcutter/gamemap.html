@@ -125,13 +125,12 @@
               });
             });
         function airportshow() {
-            const layer = document.getElementById('outline');
-            const visibility = map.getLayoutProperty(layer,'visibility');
+            const visibility = map.getLayoutProperty('outline','visibility');
             if (visibility === 'visible') {
-                map.setLayoutProperty(layer, 'visibility', 'none');
+                map.setLayoutProperty('outline', 'visibility', 'none');
             } else {
                 map.setLayoutProperty(
-                    layer,
+                    'outline,
                     'visibility',
                     'visible'
                 );
