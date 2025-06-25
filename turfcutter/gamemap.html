@@ -28,6 +28,7 @@
     <p style="color:blue;border-color: blue;border-width: 1px;" onclick="airportshow()">Airports</p>
     <p style="color:green;border-color: green;border-width: 1px;" onclick="zooshow()">Zoos</p>
     <p style="color:red;border-color: red;border-width: 1px;" onclick="golfshow()">Golf Courses</p>
+    <p style="color:#dd0;border-color: #dd0;border-width: 1px;" onclick="apshow()">Amusement Parks</p>
   </div>
   <div id='mapdiv' style='width: 90%; height: 700px;margin-left: auto; margin-right: auto;'></div>
 
@@ -67,12 +68,21 @@
       var douglasgolf = turf.point([-73.73159, 40.75259]);
       var sisilvergolf = turf.point([-74.09796, 40.62261]);
       var sirichmondgolf = turf.point([-74.11305, 40.58315]);
+      var coronaap = turf.point([-73.84928, 40.74329]);
+      var area53ap = turf.point([-73.92354, 40.71241]);
+      var forestap = turf.point([-73.85674, 40.70041]);
+      var urbanap = turf.point([-74.01443, 40.65231]);
+      var evrap = turf.point([-73.99589, 40.63071]);
+      var advenap = turf.point([-73.99468, 40.59075]);
+      var lunapark = turf.point([-73.97855, 40.57528]);
       const points = turf.featureCollection([jfk, lga]);
-      const zoopoints = turf.featureCollection([bxzoo, qzoo, cpzoo, bkzoo, sizoo])
-      const golfpoints = turf.featureCollection([dykergolf, marinegolf, forestgolf, kissenagolf, clearviewgolf, ferrygolf, pelhamgolf, mosholugolf, vcpgolf, douglasgolf, sisilvergolf, sirichmondgolf])
+      const zoopoints = turf.featureCollection([bxzoo, qzoo, cpzoo, bkzoo, sizoo]);
+      const golfpoints = turf.featureCollection([dykergolf, marinegolf, forestgolf, kissenagolf, clearviewgolf, ferrygolf, pelhamgolf, mosholugolf, vcpgolf, douglasgolf, sisilvergolf, sirichmondgolf]);
+      const appoints = turf.featureCollection([coronaap, area53ap, forestap, urbanap,evrap,advenap,lunapark]);
       const voronoiPolygons = turf.voronoi(points, options);
       const zoovoronoi = turf.voronoi(zoopoints, options);
       const golfvoronoi = turf.voronoi(golfpoints, options);
+      const apvoronoi = turf.voronoi(appoints, options);
 
 
       map.addSource('points', {
@@ -86,6 +96,10 @@
       map.addSource('golfpoints', {
         type: 'geojson',
         data: golfpoints
+      });
+      map.addSource('appoints', {
+        type: 'geojson',
+        data: appoints
       });
 
       map.addLayer({
@@ -125,6 +139,18 @@
           'circle-color': '#d00'
         }
       });
+      map.addLayer({
+        id: 'appoints',
+        type: 'circle',
+        source: 'appoints',
+        layout: {
+          'visibility': 'none'
+        },
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#dd0'
+        }
+      });
 
       map.addSource('voronoiPolygons', {
         type: 'geojson',
@@ -137,6 +163,10 @@
       map.addSource('golfvoronoi', {
         type: 'geojson',
         data: golfvoronoi
+      });
+      map.addSource('apvoronoi', {
+        type: 'geojson',
+        data: apvoronoi
       });
 
       map.addLayer({
@@ -177,6 +207,18 @@
           'line-width': 2
         }
       });
+      map.addLayer({
+        'id': 'apoutline',
+        'type': 'line',
+        'source': 'apvoronoi',
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'line-color': '#dd0',
+          'line-width': 2
+        }
+      });
       
     });
     function airportshow() {
@@ -209,6 +251,17 @@
         map.setLayoutProperty('golfpoints', 'visibility', 'visible');
       }
     };
+    function apshow() {
+      const visibility = map.getLayoutProperty('golfoutline', 'visibility');
+      if (visibility === 'visible') {
+        map.setLayoutProperty('apoutline', 'visibility', 'none');
+        map.setLayoutProperty('appoints', 'visibility', 'none');
+      } else {
+        map.setLayoutProperty('apoutline', 'visibility', 'visible');
+        map.setLayoutProperty('appoints', 'visibility', 'visible');
+      }
+    };
+
 
 
   </script>
